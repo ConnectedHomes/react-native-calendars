@@ -47,6 +47,11 @@ class Calendar extends Component {
 
     // Hide month navigation arrows. Default = false
     hideArrows: PropTypes.bool,
+    // Disable previous month navigation arrow. Default = false
+    disableLeftArrow: PropTypes.bool,
+    // Disable next month navigation arrow. Default = false
+    disableRightArrow: PropTypes.bool,
+
     // Display loading indicador. Default = false
     displayLoadingIndicator: PropTypes.bool,
     // Do not show days of other months in month page. Default = false
@@ -261,6 +266,8 @@ class Calendar extends Component {
         <CalendarHeader
           theme={this.props.theme}
           hideArrows={this.props.hideArrows}
+          disableLeftArrow={this.props.disableLeftArrow}
+          disableRightArrow={this.props.disableRightArrow}
           month={this.state.currentMonth}
           addMonth={this.addMonth}
           showIndicator={indicator}

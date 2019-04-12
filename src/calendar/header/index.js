@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import XDate from 'xdate';
@@ -10,10 +10,12 @@ import {
   CHANGE_MONTH_RIGHT_ARROW
 } from '../../testIDs';
 
-class CalendarHeader extends Component {
+class CalendarHeader extends PureComponent {
   static propTypes = {
     theme: PropTypes.object,
     hideArrows: PropTypes.bool,
+    disableLeftArrow: PropTypes.bool,
+    disableRightArrow: PropTypes.bool,
     month: PropTypes.instanceOf(XDate),
     addMonth: PropTypes.func,
     showIndicator: PropTypes.bool,
@@ -46,22 +48,6 @@ class CalendarHeader extends Component {
     this.props.addMonth(-1);
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (
-      nextProps.month.toString('yyyy MM') !==
-      this.props.month.toString('yyyy MM')
-    ) {
-      return true;
-    }
-    if (nextProps.showIndicator !== this.props.showIndicator) {
-      return true;
-    }
-    if (nextProps.hideDayNames !== this.props.hideDayNames) {
-      return true;
-    }
-    return false;
-  }
-
   onPressLeft() {
     const {onPressArrowLeft} = this.props;
     if(typeof onPressArrowLeft === 'function') {
@@ -89,6 +75,7 @@ class CalendarHeader extends Component {
           style={this.style.arrow}
           hitSlop={{left: 20, right: 20, top: 20, bottom: 20}}
           testID={CHANGE_MONTH_LEFT_ARROW}
+          disabled={!!this.props.disableLeftArrow}
         >
           {this.props.renderArrow
             ? this.props.renderArrow('left')
@@ -104,6 +91,7 @@ class CalendarHeader extends Component {
           style={this.style.arrow}
           hitSlop={{left: 20, right: 20, top: 20, bottom: 20}}
           testID={CHANGE_MONTH_RIGHT_ARROW}
+          disabled={!!this.props.disableRightArrow}
         >
           {this.props.renderArrow
             ? this.props.renderArrow('right')
